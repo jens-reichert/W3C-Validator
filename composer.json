@@ -1,0 +1,11 @@
+{
+  "autoload": {
+    "psr-4": {
+      "Validator\\" : "src/"
+    }
+  },
+  "require": {
+    "phpunit/phpunit": "^5.7",
+    "guzzlehttp/guzzle": "~6.0"
+  }
+}
