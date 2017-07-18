@@ -55,10 +55,16 @@ class HtmlValidator
     protected function callValidator()
     {
         return $this->client->post(static::VALIDATOR_API.'?out='.static::OUTPUT_FORMAT, [
-            'headers' => [
-                'Content-type' => 'text/html',
+            'multipart' => [
+                [
+                    'name' => 'out',
+                    'contents' => static::OUTPUT_FORMAT,
+                ],
+                [
+                    'name' => 'content',
+                    'contents' => $this->html,
+                ],
             ],
-            'body' =>  $this->html,
         ]);
     }
 
@@ -70,5 +76,13 @@ class HtmlValidator
     protected function fetchJsonResult($response)
     {
         return json_decode($response->getBody()->getContents());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValidationResult()
+    {
+        return $this->validationResult;
     }
 }
