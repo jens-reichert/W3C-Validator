@@ -31,7 +31,7 @@ class HtmlValidator
 
     public function isValid()
     {
-        return empty($this->validationResult->messages);
+        return empty($this->validationMessages());
     }
 
     public function isNotValid()
@@ -84,5 +84,35 @@ class HtmlValidator
     public function getValidationResult()
     {
         return $this->validationResult;
+    }
+
+    public function countErrors()
+    {
+        return count($this->validationMessages());
+    }
+
+    public function hasErrors()
+    {
+        return !! $this->countErrors();
+    }
+
+    public function getErrors()
+    {
+        return array_map(function ($error){
+            return new HtmlValidationIssue($error);
+        }, $this->validationMessages());
+    }
+
+    public function firstError()
+    {
+        return new HtmlValidationIssue($this->getValidationResult()->messages[0]);
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function validationMessages()
+    {
+        return $this->getValidationResult()->messages;
     }
 }
