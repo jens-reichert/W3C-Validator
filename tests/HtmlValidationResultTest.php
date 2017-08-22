@@ -1,5 +1,6 @@
 <?php
 
+use GuzzleHttp\Client;
 use Validator\HtmlValidationIssue;
 use Validator\HtmlValidator;
 
@@ -11,7 +12,7 @@ class HtmlValidationResultTest extends PHPUnit_Framework_TestCase
     protected function getInvalidValidator()
     {
         $html = file_get_contents(dirname(__FILE__) . '/Mocks/InValid.html');
-        $validator = new HtmlValidator($html);
+        $validator = new HtmlValidator(new Client, $html);
         return $validator;
     }
 
